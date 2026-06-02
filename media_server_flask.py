@@ -11,10 +11,12 @@ This skill implements a media file server that:
 import os
 import mimetypes
 from pathlib import Path
+import hashlib
 from urllib.parse import quote_plus
-from flask import Flask, send_from_directory, render_template, abort, jsonify
+from flask import Flask, send_from_directory, render_template, abort, jsonify, request
 from media_frp_util import get_domain, setup_frp
 from media_file_util import get_media_directory, get_media_files
+from uuid_config import UUIDConfig
 
 
 # Initialize Flask app
@@ -46,9 +48,7 @@ def handle_api_openclaw():
         for media_file in media_files:
             media_file_name = os.path.basename(media_file)
             media_file_url = f"https://{frp_domain}/{media_file_name}"
-
-            google_play_query = f"url={quote_plus(media_file_url)}"
-            google_play_url = f"https://play.google.com/store/apps/details?id=com.yunpoly.aiplayer&referrer={quote_plus(google_play_query)}"
+            google_play_url = f"https://yun-hub.chat/link/?app=aipollo&clickid=12345&videourl={media_file_url}"
             txt += f"{media_file_name}: {google_play_url}\n"
     
     # return jsonify({
@@ -66,16 +66,22 @@ def handle_api_openclaw():
         "result": "Success"
     }), 200
 
+@app.before_request
+def check_auth():
+    if request.path == '/api/openclaw':
+        return
+    
+    domain = get_domain()
+    hash_domain_value = hashlib.md5(domain.encode()).hexdigest()
+    print(f"Hash UUID Value: {hash_domain_value}")
+    if request.headers.get('X-API-KEY') != hash_domain_value:
+        return jsonify({'message': 'Invalid API key'}), 401
+
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def serve_media(path):
-    """Serve media files and directory listings."""
     media_dir = get_media_directory()
-    
-    # Security check: prevent directory traversal attacks
     safe_path = os.path.normpath(os.path.join(media_dir, path))
-    
-    # Ensure the path is within the media directory
     if not safe_path.startswith(os.path.abspath(media_dir)):
         abort(403)  # Forbidden
     

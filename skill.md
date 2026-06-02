@@ -16,7 +16,7 @@ requires:
     - "jinja2"
 triggers:
   - type: keyword
-    values: ["playlist", "media list", "show videos", "list files"]
+    values: ["playlist", "media list", "show videos", "list files", "media pocket", "my media", "video library", "media gallery"]
     url: "http://local.flask.service:8000/api/openclaw"
     method: "POST"
 
