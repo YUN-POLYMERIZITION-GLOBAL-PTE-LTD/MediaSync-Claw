@@ -1,0 +1,26 @@
+serverAddr = "129.213.174.213"
+        serverPort = 7000
+
+        webServer.addr = "127.0.0.1"
+        webServer.port = 7400
+
+        log.level = "debug"
+        log.to = "./frpc.log"
+
+        [transport]
+        heartbeatInterval = 30
+        heartbeatTimeout = 90
+        tcpMux = true
+        tcpMuxKeepaliveInterval = 30
+
+        [[proxies]]
+        name = "8ffb25ad04884294b0cdf1a46564344a.yunfrp.net"
+        type = "https"
+        customDomains = ["8ffb25ad04884294b0cdf1a46564344a.yunfrp.net"]
+
+        [proxies.plugin]
+        type = "https2http"
+        localAddr = "127.0.0.1:8000"
+        crtPath = "./yunfrp_net.crt"
+        keyPath = "./yunfrp_net.key"
+        hostHeaderRewrite = "127.0.0.1"
