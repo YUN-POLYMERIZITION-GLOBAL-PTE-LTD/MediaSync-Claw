@@ -42,28 +42,18 @@ def guess_mime_type(filepath):
 def handle_api_openclaw():
     frp_domain = get_domain()
 
-    txt = "The file below is a playlist of all available media files.\n\n"
+    txt = "🎬 *The file below is a playlist of all available media files:*\n\n"
     media_files = get_media_files()
     if len(media_files) > 0:
         for media_file in media_files:
             media_file_name = os.path.basename(media_file)
             media_file_url = f"https://{frp_domain}/{media_file_name}"
-            google_play_url = f"https://yun-hub.chat/link/?app=aipollo&clickid=12345&videourl={media_file_url}"
-            txt += f"{media_file_name}: {google_play_url}\n"
-    
-    # return jsonify({
-    #         "status": "success",
-    #             "data": {
-    #                 "type": "text",
-    #                 "text": txt
-    #             }
-    #         })
+            google_play_url = f"https://yun-hub.chat/link/?app=aipollo&clickid=12345&videourl={quote_plus(media_file_url)}"
+            txt += f"{media_file_name}: {google_play_url}\n" 
+    else:
+        txt += "No media files found."
     return jsonify({
-        "success": True,
-        "action": "reply",
-        "abort": True,
-        "reply": txt,
-        "result": "Success"
+        "text": txt,
     }), 200
 
 @app.before_request
