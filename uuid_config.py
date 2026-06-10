@@ -6,7 +6,6 @@ class UUIDConfig:
     def __init__(self):
         self.config = configparser.ConfigParser()
         self.config_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "uuid.ini")
-        pass
     
     def get_uuid(self):
         uuid_value = self.query_uuid()
@@ -17,13 +16,13 @@ class UUIDConfig:
         return uuid_value
 
     def update_uuid(self, uuid):
-        self.config['comm'] = {'uuid': uuid}
+        self.config['comm'] = {'uuid_value': uuid}
         with open(self.config_file_path, 'w') as configfile:
             self.config.write(configfile)
 
     def query_uuid(self):
         self.config.read(self.config_file_path)
-        if 'comm' not in self.config or 'uuid' not in self.config['comm']:
+        if 'comm' not in self.config or 'uuid_value' not in self.config['comm']:
             print("Error: UUID not found in config. Please run setup_uuid() first.")
             return None
-        return self.config['comm']['uuid']
+        return self.config['comm']['uuid_value']

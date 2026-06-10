@@ -14,6 +14,8 @@ requires:
     - "flask>=2.0.1"
     - "requests"
     - "jinja2"
+    - "aiortc"
+    - "flask-socketio"
 triggers:
   - type: keyword
     values: ["playlist", "media list", "show videos", "list files", "media pocket", "my media", "video library", "media gallery"]
