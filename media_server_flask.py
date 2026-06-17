@@ -48,19 +48,20 @@ def handle_api_openclaw():
         for media_file in media_files:
             media_file_name = os.path.basename(media_file)
             # WebRTC player URL — browser opens this to start P2P streaming
-            player_url = f"https://{frp_domain}/play?file={quote_plus(media_file_name)}"
+            media_file_url = f"https://{frp_domain}/{media_file_name}"
+            player_url = f"https://yun-hub.chat/link/?app=aipollo&clickid=12345&videourl={quote_plus(media_file_url)}"
             txt += f"{media_file_name}: {player_url}\n"
     else:
         txt += "No media files found."
     return jsonify({"text": txt}), 200
 
-@app.route('/play')
-def serve_player():
-    """Serves the WebRTC player HTML page."""
-    filename = request.args.get('file')
-    if not filename:
-        abort(400)
-    return render_template('player.html', filename=filename)
+# @app.route('/play')
+# def serve_player():
+#     """Serves the WebRTC player HTML page."""
+#     filename = request.args.get('file')
+#     if not filename:
+#         abort(400)
+#     return render_template('player.html', filename=filename)
 
 
 # ══════════════════════════════════════════════════════════════
@@ -74,8 +75,13 @@ def handle_connect():
     from aiortc import RTCConfiguration, RTCIceServer
     sid = flask_request.sid
     configuration = RTCConfiguration(iceServers=[
+        # Google
         RTCIceServer(urls="stun:stun.l.google.com:19302"),
         RTCIceServer(urls="stun:stun1.l.google.com:19302"),
+        # Cloudflare
+        RTCIceServer(urls="stun:stun.cloudflare.com:3478"),
+        # Twilio 
+        RTCIceServer(urls="stun:global.stun.twilio.com:3478")
     ])
     pc = RTCPeerConnection(configuration)
     peer_connections[sid] = pc
