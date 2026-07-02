@@ -48,7 +48,7 @@ def handle_api_openclaw():
         for media_file in media_files:
             media_file_name = os.path.basename(media_file)
             # WebRTC player URL — browser opens this to start P2P streaming
-            media_file_url = f"https://{frp_domain}/{media_file_name}"
+            media_file_url = f"http://{frp_domain}/{media_file_name}"
             player_url = f"https://yun-hub.chat/link/?app=aipollo&clickid=12345&videourl={quote_plus(media_file_url)}"
             txt += f"{media_file_name}: {player_url}\n"
     else:

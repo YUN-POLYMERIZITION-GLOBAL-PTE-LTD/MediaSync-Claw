@@ -116,9 +116,6 @@ def setup_frp_and_keep_alive(port=8000, frp_config=None, stop_event=None):
             webServer.addr = "127.0.0.1"
             webServer.port = 7400
 
-            log.level = "debug"
-            log.to = "./frpc.log"
-
             [transport]
             heartbeatInterval = 30
             heartbeatTimeout = 90
@@ -127,15 +124,9 @@ def setup_frp_and_keep_alive(port=8000, frp_config=None, stop_event=None):
 
             [[proxies]]
             name = "{frp_domain}"
-            type = "https"
+            type = "http"
             customDomains = ["{frp_domain}"]
-
-            [proxies.plugin]
-            type = "https2http"
-            localAddr = "127.0.0.1:{port}"
-            crtPath = "./yunfrp_net.crt"
-            keyPath = "./yunfrp_net.key"
-            hostHeaderRewrite = "127.0.0.1"
+            localPort = {port}
         '''
         frp_config = "frpc.toml"
         with open(frp_config, 'w') as f:

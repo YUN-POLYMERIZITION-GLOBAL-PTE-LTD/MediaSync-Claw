@@ -62,6 +62,6 @@ This skill **automatically** downloads and runs the **FRP (Fast Reverse Proxy) c
 
 ### 4. Remote Server Trust
 * The FRP server at `129.213.174.213:7000` is a third-party relay. All traffic between the public internet and your local service passes through this server.
-* TLS termination is handled by the FRP server using certificates (`yunfrp_net.crt` / `yunfrp_net.key`) bundled with this skill.
+* The FRP tunnel operates in HTTP mode (no TLS termination by FRP server).
 * You must trust that this FRP server operator will not inspect, log, or tamper with your traffic.
 
