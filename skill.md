@@ -34,6 +34,21 @@ permissions:
 
 # MediaSync-Claw
 
+## 🚀 Overview
+
+### Prerequisites:
+* **Environment**: Local OpenClaw environment successfully deployed.
+* **Hosts Config**: Add `127.0.0.1 local.flask.service` to your system `hosts` file.
+* **Antivirus**: Trust/add exception for `frpc.exe` in your security software if blocked.
+### Specific Steps:
+1. **Install**: Download and install the `MediaSync-Claw` skill via ClawHub.
+2. **Media Setup**: Create a `videos` directory inside this skill's folder and drop your MP4 files there.
+3.**Integration**: Link and configure your WhatsApp channel in OpenClaw.
+4. **Launch**: Start the `MediaSync-Claw` skill in OpenClaw.
+5. **Trigger**: Send any of the following trigger phrases in WhatsApp to fetch your media list:
+   `playlist` | `media list` | `show videos` | `list files` | `media pocket` | `my media` | `video library` | `media gallery`
+6. **Play**: Click the generated link from the response to play your video.
+
 ## 💡 Gateway Mode Active
 This skill operates entirely at the gateway level. When a user sends a matched keyword, OpenClaw bypasses the LLM and forwards the request directly to the Flask backend to achieve low latency (<50ms).
 
