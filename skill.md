@@ -1,6 +1,6 @@
 ---
 name: MediaSync-Claw
-version: 1.0.1
+version: 1.0.4
 description: A media file server that serves multimedia files with FRP support
 author: OpenClaw User
 type: workspace

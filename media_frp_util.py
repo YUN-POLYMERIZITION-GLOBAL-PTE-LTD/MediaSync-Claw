@@ -11,7 +11,7 @@ from uuid_config import UUIDConfig
 # These must be updated when the FRP version is bumped.
 # Source: https://github.com/fatedier/frp/releases/tag/v0.65.0
 FRP_VERSION = "0.65.0"
-FRP_ZIP_SHA256 = "5885bff09604e719e429698f800f89379f3910f074990ca1f7d8a7f7a40970eda"
+FRP_ZIP_SHA256 = "5885bff09604e719e429698f800f89379f3910f07490ca1f7d8a7f7a40970eda"
 FRPC_EXE_SHA256 = "5b0846d4a5e9bcde0960b354fd819eb0011529ff23f41ad55a8717ba5c7004ac"
 
 
