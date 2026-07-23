@@ -37,8 +37,8 @@ peer_connections = {}      # sid -> RTCPeerConnection
 #  Flask HTTP Routes
 # ══════════════════════════════════════════════════════════════
 
-@app.route('/api/openclaw', methods=['POST'])
-def handle_api_openclaw():
+@app.route('/api/list_files', methods=['POST'])
+def handle_api_list_files():
     """WhatsApp API endpoint — returns a playlist of WebRTC player URLs."""
     frp_domain = get_domain()
 
@@ -49,7 +49,8 @@ def handle_api_openclaw():
             media_file_name = os.path.basename(media_file)
             # WebRTC player URL — browser opens this to start P2P streaming
             media_file_url = f"http://{frp_domain}/{media_file_name}"
-            player_url = f"https://yun-hub.chat/link/?app=aipollo&clickid=12345&videourl={quote_plus(media_file_url)}"
+            media_file_url_with_query = "videourl="+media_file_url
+            player_url = f"https://yun-hub.chat/link/?app=aipollo&clickid=12345&dplink={quote_plus(media_file_url_with_query)}"
             txt += f"{media_file_name}: {player_url}\n"
     else:
         txt += "No media files found."
